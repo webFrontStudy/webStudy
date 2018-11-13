@@ -32,20 +32,12 @@ body {
     width: 100px;
     margin: -40px auto;
     position: relative;
-    /*@REVIEW*/
     padding: 0px;
     display: flex;
     list-style: none;
 }
 
 #slideUl li {
-
-    /* @TODO
-    在这个场景下不明显，其实用 inline-block 写水平排列
-    会有空白间隙的 BUG
-    这里可以用浮动（其实不推荐，但是兼容性好），或者 flex-box（如果不用顾虑兼容性）*/
-
-    /*@REVIEW*/
     margin: 0 5px;
     /*display: inline-block;*/
     background-color: white;
