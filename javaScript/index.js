@@ -71,10 +71,11 @@ $(document).ready(function() {
         // 比如你可以参考淘宝这个轮播：https://www.taobao.com/
         // 就是往左移动的动效
 
-        $("#slideImg li").eq(now).css('display','inline-block')
+        // @REVIEW
+        //question 有一个问题从最后一张再回到第一张感觉怪怪的，但淘宝的感觉就还好
+        $("#slideImg").css('transform', 'translate3d('+ (-now*360) +'px, 0px, 0px)');
         $("#slideUl li").eq(now).css('opacity', 1);
         if (before != now) {
-            $("#slideImg li").eq(before).css('display','none')
             $("#slideUl li").eq(before).css('opacity', 0.5);
         }
         beforeShowNum = now;
