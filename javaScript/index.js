@@ -1,35 +1,5 @@
 $(document).ready(function() {
 
-    // var slideBar = document.getElementById("slideBar");
-    // slideBar.onmousedown = function(eventDown) {
-    //     var downClick = eventDown.screenX;
-    //     var _eventDown = window.event || eventDown;
-    //     var left = _eventDown.offsetX; //获取鼠标点击位置和p左边缘距离
-    //     //使用移动端调试情况move是不生效的
-
-    // @TODO
-    // → → 特么移动端有鼠标吗就 mousemove ……
-    // 请用 touchmove
-    // 试了一下还是哪里好像有点问题，改日继续
-
-    //     document.onmousemove = function(eventUp) {
-    //         var upMouse = eventUp.screenX;
-    //         var _eventUp = window.event || eventUp;
-    //         var x = _eventUp.clientX - left; //box距离页面左边缘距离
-    //         slideBar.style.left = x + "px";
-    //         // if(downClick>upMouse){
-    //         //   console.log("左滑");
-    //         // }
-    //         // else{
-    //         //   console.log("右滑");
-    //         // }
-    //         slideBar.onmouseup = function() {
-    //             document.onmousemove = null; //当鼠标弹起的时候窗口不跟随鼠标移动
-    //         }
-    //     }
-
-
-    // }
     var timeoutID;
     var stop;
     var ImgPathArray = ['./img/slide1.jpeg', './img/slide2.jpeg', './img/slide3.jpeg', './img/slide4.jpeg', './img/slide5.jpeg'];
@@ -73,11 +43,68 @@ $(document).ready(function() {
 
         // @REVIEW
         //question 有一个问题从最后一张再回到第一张感觉怪怪的，但淘宝的感觉就还好
-        $("#slideImg").css('transform', 'translate3d('+ (-now*360) +'px, 0px, 0px)');
+        $("#slideImg").css('transform', 'translate3d(' + (-now * 360) + 'px, 0px, 0px)');
         $("#slideUl li").eq(now).css('opacity', 1);
         if (before != now) {
             $("#slideUl li").eq(before).css('opacity', 0.5);
         }
         beforeShowNum = now;
     }
+
+    // @REVIEW
+    var startX;
+    var moveEndX;
+    var scrollDirection;
+    $("#slideBar").on("touchstart", function(e) {
+
+        e.preventDefault();
+        // question:为什么我就用e.pageX是没有办法触发到左滑事件的,但是web端的就可以
+        startX = e.originalEvent.changedTouches[0].pageX;
+        // startX = e.pageX;
+    });
+    $("#slideBar").on("touchmove", function(e) {
+
+        e.preventDefault();
+        moveEndX = e.originalEvent.changedTouches[0].pageX;
+        // moveEndX = e.pageX;
+        scrollDirection = moveEndX - startX;
+    });
+    $("#slideBar").on("touchend", function(e) {
+        // if(now)
+        e.preventDefault();
+        window.clearTimeout(timeoutID);
+        if (scrollDirection > 0) {
+            console.log("左滑");
+            num = beforeShowNum == 0 ? 4 : beforeShowNum - 1;
+            startPicAntimate();
+        } else {
+            console.log("右滑");
+            startPicAntimate();
+        }
+    });
+
+    $("#slideBar").on("mousedown", function(e) {
+
+        e.preventDefault();
+        startX = e.pageX;
+    });
+    $("#slideBar").on("mousemove", function(e) {
+
+        e.preventDefault();
+        moveEndX = e.pageX;
+        scrollDirection = moveEndX - startX;
+    });
+    $("#slideBar").on("mouseup", function(e) {
+        // if(now)
+        e.preventDefault();
+        window.clearTimeout(timeoutID);
+        if (scrollDirection > 0) {
+            console.log("左滑");
+            num = beforeShowNum == 0 ? 4 : beforeShowNum - 1;
+            startPicAntimate();
+        } else {
+            console.log("右滑");
+            startPicAntimate();
+        }
+    });
 });
