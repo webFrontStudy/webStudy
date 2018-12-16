@@ -7,6 +7,35 @@ $(document).ready(function() {
     var num = 0;
     var beforeShowNum = 0;
     var len = ImgPathArray.length;
+    var clientWidth = document.body.clientWidth;
+    var clientHeight = document.body.clientHeight;
+
+    // @REVIEW
+    var pcFlag = isPC();
+    if (pcFlag) {
+        clientWidth = "360px";
+        clientHeight = "640px";
+    }
+    $("#slideBar").width(clientWidth);
+    $("#slideBar").height(clientHeight);
+    $("#slideImg li img").width(clientWidth);
+    $("#slideImg li img").height(clientHeight);
+    $("#slideUl").offset({ 'left': (clientWidth - 100) / 2 });
+
+    function isPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+            "SymbianOS", "Windows Phone", "iPod"
+        ];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
 
     //开始轮播
     var startPicAntimate = function() {
@@ -43,7 +72,7 @@ $(document).ready(function() {
 
         // @REVIEW
         //question 有一个问题从最后一张再回到第一张感觉怪怪的，但淘宝的感觉就还好
-        $("#slideImg").css('transform', 'translate3d(' + (-now * 360) + 'px, 0px, 0px)');
+        $("#slideImg").css('transform', 'translate3d(' + (-now * clientWidth) + 'px, 0px, 0px)');
         $("#slideUl li").eq(now).css('opacity', 1);
         if (before != now) {
             $("#slideUl li").eq(before).css('opacity', 0.5);

@@ -7,8 +7,6 @@ body {
 }
 
 #slideBar {
-    width: 360px;
-    height: 640px;
     margin: 0 auto;
     position: relative;
     overflow: hidden;
@@ -19,9 +17,10 @@ body {
     list-style: none;
     padding: 0px;
     position: absolute;
-    width: 1800px;
+    width: 500%;
     left: 0px;
     transition-duration: 0.5s;
+    margin: 0px;
 }
 
 
@@ -30,11 +29,11 @@ body {
     float: left;
 }
 
-#slideImg li img {
-    width: 360px;
-    height: 640px;
+/*#slideImg li img {
+    width: 375px;
+    height: 100%;
 }
-
+*/
 #slideUl {
     bottom: 5px;
     width: 100px;
